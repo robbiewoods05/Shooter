@@ -5,3 +5,5 @@
 *.xml
 *.mgcb
 Shooter/Content/Content.mgcb
+Shooter/Shooter.csproj
+*.csproj
