@@ -38,9 +38,9 @@ namespace Shooter
 
         private void Move(string direction, GameTime dt)
         {
-            if (direction == "up")
+            if (direction == "up" && y >= 2)
                 y -= (speed * dt.ElapsedGameTime.Milliseconds) / 1000;
-            else if (direction == "down")
+            else if (direction == "down" && y <= 477 - PlayerSprite.Height)
                 y += (speed * dt.ElapsedGameTime.Milliseconds) / 1000;
             else if (direction == "left")
                 x -= (speed * dt.ElapsedGameTime.Milliseconds) / 1000;
@@ -71,6 +71,8 @@ namespace Shooter
         
         public void HandleInput(KeyboardState state, GameTime gameTime)
         {
+            //KeyboardState state = Keyboard.GetState();
+
             if (state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.W))
                 Move("up", gameTime);
             else if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.S))
