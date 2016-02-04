@@ -16,23 +16,17 @@ namespace Shooter
             _currentState = state;
         }
 
-        public void Set(string state)
+        public virtual void Set(string state)
         {
           _currentState = state;
         }
-
-        public bool Is(string state)
-        {
-            return _currentState == state;
-        }
-
-        public void Pop()
+        public virtual void Pop()
         {
             _currentState = _lastState;
             _lastState = null;
         }
 
-        public void Push(string state)
+        public virtual void Push(string state)
         {
             if (_currentState != string.Empty)
                 _lastState = _currentState;
