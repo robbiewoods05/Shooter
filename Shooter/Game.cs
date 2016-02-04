@@ -8,16 +8,16 @@ namespace Shooter
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Shooter : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player;
         KeyboardState keyState;
         SoundEffect bgMusic, firesound;
-        StateManager gameState;
+        GameStateManager gameState;
 
-        public Game1()
+        public Shooter()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -34,7 +34,7 @@ namespace Shooter
             // TODO: Add your initialization logic here
           
             player = new Player(0, 0);
-            gameState = new StateManager("menu");
+            gameState = new GameStateManager("menu");
 
             base.Initialize();
         }
@@ -49,6 +49,9 @@ namespace Shooter
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             bgMusic = Content.Load<SoundEffect>("bgmusic");
+
+            Menu.LoadContent(Content.Load<Texture2D>("play"), "play");
+            Menu.LoadContent(Content.Load<Texture2D>("ship"), "options");
             
             player.PlayerSprite = Content.Load<Texture2D>("ship");
 
@@ -78,13 +81,11 @@ namespace Shooter
         {
             keyState = Keyboard.GetState();
 
-            int elapsed = gameTime.ElapsedGameTime.Milliseconds / 1000;
-
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             if (gameState.CurrentState == "menu")
-                Menu.HandleInput(keyState);
+                Menu.HandleInput(ref gameState);
 
             if (gameState.CurrentState == "game")
             {
@@ -104,10 +105,10 @@ namespace Shooter
         {
             GraphicsDevice.Clear(Color.Black);
 
-            if (gameState.CurrentState == "menu")
+            if (gameState.CurrentState == gameState.States[0])
                 Menu.Draw(spriteBatch);
 
-            if (gameState.CurrentState == "play")
+            if (gameState.CurrentState == gameState.States[2])
                 player.Draw(spriteBatch);
             // TODO: Add your drawing code here
 
